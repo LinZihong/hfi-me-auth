@@ -56,13 +56,20 @@ class LoginController extends Controller
         if ($user->token === null) {
             $user->token()->save(new Token());
         }
-        $address = Node::name($request['from'])->firstOrFail()->address;
         $token = $user->token()->first()->value;
 
+        $node = Node::name($request['from'])->first();
+        if ($node === null) {
+            $address = env('APP_URL');
+        } else {
+            $address = $node->address;
+        }
+
         $cookie = cookie('token', $token, 3600, '/', '.' . env('ROOT_DOMAIN'), false, false);
-        $response = response('ok');
-        $response->headers->setCookie($cookie);
-        return $response;
+
+        $redirect = redirect($address)->cookie($cookie);
+
+        return $redirect;
     }
 
     public function logout(Request $request)
@@ -79,6 +86,6 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return response('logged out')->withCookie(Cookie::forget('token','/','.'.env('ROOT_DOMAIN')));
+        return response('logged out')->withCookie(Cookie::forget('token', '/', '.' . env('ROOT_DOMAIN')));
     }
 }
