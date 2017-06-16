@@ -79,6 +79,6 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return response('logged out')->withCookie(Cookie::forget('token'));
+        return response('logged out')->withCookie(Cookie::forget('token','/','.'.env('ROOT_DOMAIN')));
     }
 }
