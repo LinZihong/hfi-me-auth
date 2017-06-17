@@ -21,7 +21,7 @@ class CheckToken
         }
         $token = Token::value($request->token)->first();
         if ($token === null) {
-            return formatJson(__('api_auth.token_not_exist', 404));
+            return formatJson(__('api_auth.token_not_exist'), 404);
         }
         return $next($request);
     }
