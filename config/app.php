@@ -177,6 +177,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        /*
+         * Custom helper
+         */
+        browner12\helpers\HelperServiceProvider::class,
+
     ],
 
     /*
