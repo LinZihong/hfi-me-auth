@@ -10,7 +10,7 @@ class Token extends Model
 
     public function __construct(array $attributes = [])
     {
-        $attributes['value'] = bin2hex(openssl_random_pseudo_bytes(32));
+        //$attributes['value'] = bin2hex(openssl_random_pseudo_bytes(32));
         parent::__construct($attributes);
     }
 
@@ -19,7 +19,7 @@ class Token extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function scopeValue($query, $value)
+    public function scopeTokenValue($query, $value)
     {
         return $query->where('value', $value);
     }
