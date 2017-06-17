@@ -18,4 +18,9 @@ class Token extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function scopeValue($query, $value)
+    {
+        return $query->where('value', $value);
+    }
 }
