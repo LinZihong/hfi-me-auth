@@ -51,6 +51,13 @@ class LoginController extends Controller
         return $this->authenticated($request, $this->guard()->user());
     }
 
+    /**
+     * Set the root-domain authentication token for authenticated user.
+     *
+     * @param Request $request
+     * @param $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function authenticated(Request $request, $user)
     {
         if ($user->token === null) {
@@ -85,6 +92,7 @@ class LoginController extends Controller
         $request->session()->flush();
 
         $request->session()->regenerate();
+
 
         return response('logged out')->withCookie(Cookie::forget('token', '/', '.' . env('ROOT_DOMAIN')));
     }
